@@ -1,0 +1,5 @@
+<h1>Vehicle creation</h1>
+<%= form_for @vehicle, url: { action: "create" } do |f| %>
+  <%= render 'form', f: f, vehicle: @vehicle %>
+  <%= f.submit %>
+<% end %>

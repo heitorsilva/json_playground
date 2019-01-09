@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  web:
+    build: .
+    image: json_playground/web
+    working_dir: /json_playground
+    tty: true
+    stdin_open: true
+    command: >
+      /bin/sh -c "
+        while ! nc -zv postgres 5432;
+        do
+          echo 'PostgreSQL not ready' && sleep 5
+        done
+        bundle exec puma -C config/puma.rb -e development -p 3000 --pidfile ./tmp/puma.pid
+      "
+    volumes:
+      - .:/json_playground:delegated
+    ports:
+      - "${HOST_PORT:-3000}:3000"
+    networks:
+      - jsonpnet
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:10.6
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT:-5432}:5432
+    networks:
+      - jsonpnet
+    environment:
+      POSTGRES_DB: jsonp
+      POSTGRES_USER: jsonp
+      POSTGRES_PASSWORD: password
+    entrypoint: /bin/sh -c "docker-entrypoint.sh -c 'shared_buffers=256MB' -c 'work_mem=256MB'"
+networks:
+  jsonpnet:
+    driver: "bridge"
+volumes:
+  postgresdata:
+    driver: "local"
