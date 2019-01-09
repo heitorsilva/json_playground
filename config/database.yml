@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: UTF8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: jsonp
+  password: password
+  host: <%= ENV.fetch("POSTGRES_HOST") { "postgres" } %>
+
+development:
+  <<: *default
+  database: jsonp
+
+test:
+  <<: *default
+  database: jsonp_test
+
+production:
+  <<: *default
+  database: jsonp
