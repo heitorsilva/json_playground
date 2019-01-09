@@ -1,0 +1,9 @@
+<h1>Vehicle creation</h1>
+<%= form_for @vehicle, url: { action: "create" } do |f| %>
+  <%= fields_for :description, @vehicle.description do |fields| %>
+    Name: <%= fields.text_field :name %> <br />
+    Brand: <%= fields.text_field :brand %> <br />
+    Wheels: <%= fields.text_field :wheels %> <br />
+  <% end %>
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,20 @@
+default: &default
+  adapter: mysql2
+  host: mysql
+  port: 3306
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: json_playground
+  password: password
+
+development:
+  <<: *default
+  database: json_playground
+
+test:
+  <<: *default
+  database: json_playground_test
+
+production:
+  <<: *default
+  database: json_playground

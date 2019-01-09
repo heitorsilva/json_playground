@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+  web:
+    build: .
+    image: json_playground/web
+    working_dir: /json_playground
+    tty: true
+    stdin_open: true
+    command: >
+      /bin/sh -c "
+        while ! nc -zv mysql 3306;
+        do
+          echo 'MySQL not ready' && sleep 5
+        done
+        bundle exec puma -C config/puma.rb -e development -p 3000 --pidfile ./tmp/puma.pid
+      "
+    volumes:
+      - .:/json_playground:delegated
+    ports:
+      - "${HOST_PORT:-3000}:3000"
+    networks:
+      - jsonpnet
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - ${DB_PORT:-3306}:3306
+    networks:
+      - jsonpnet
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_USER: "json_playground"
+      MYSQL_PASSWORD: "password"
+    entrypoint: >
+      /bin/sh -c "
+        echo \"CREATE DATABASE IF NOT EXISTS json_playground;\nCREATE DATABASE IF NOT EXISTS json_playground_test;\nGRANT ALL PRIVILEGES ON *.* TO 'json_playground'@'%' IDENTIFIED BY 'password';\" > /docker-entrypoint-initdb.d/init.sql;
+        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
+      "
+networks:
+  jsonpnet:
+    driver: "bridge"
+volumes:
+  mysqldata:
+    driver: "local"
