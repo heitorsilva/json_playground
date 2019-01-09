@@ -1,0 +1,11 @@
+<p>Name: <%= f.text_field :name %></p>
+<p>Brand: <%= f.text_field :brand %></p>
+<%= f.fields_for :description, OpenStruct.new(vehicle.description) do |df| %>
+  <% vehicle.schema['attributes'].each do |field, info| %>
+    <% if info['type'] == 'boolean' %>
+      <p><%= field %>: <%= df.check_box field %> <%= vehicle.errors[field] %></p>
+    <% else %>
+      <p><%= field %>: <%= df.text_field field %> <%= vehicle.errors[field] %></p>
+    <% end %>
+  <% end %>
+<% end %>

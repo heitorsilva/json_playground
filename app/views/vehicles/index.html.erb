@@ -1,0 +1,24 @@
+<h1>Vehicle list</h1>
+<%= link_to 'Create vehicle', '/vehicles/new' %>
+<% if @vehicles.size > 0 %>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Brand</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @vehicles.each do |vehicle| %>
+        <tr>
+          <td><%= vehicle.name %></td>
+          <td><%= vehicle.brand %></td>
+          <td>
+            <%= link_to 'Edit', "/vehicles/edit/#{vehicle.id}" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
