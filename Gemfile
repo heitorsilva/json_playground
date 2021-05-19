@@ -5,7 +5,7 @@ ruby '2.5.1'
 
 gem 'rails', '~> 5.2.2'
 gem 'pg', '~> 1.1', '>= 1.1.3' # Use PostgreSQL as the database for Active Record
-gem 'puma', '~> 3.12' # Use Puma as the app server
+gem 'puma', '~> 4.3' # Use Puma as the app server
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'coffee-rails', '~> 4.2' # Use CoffeeScript for .coffee assets and views
