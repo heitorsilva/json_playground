@@ -11,11 +11,11 @@ we can't define hardcoded fields on the model (or concerns), and neither on the 
 These dynamic fields are stored in a MySQL JSON field (or JSONB if using PostgreSQL), and we
 will validate them through another JSON field, that has the schema for it (using [json-schema](https://json-schema.org)).
 
-Our inspirations for this are the following resources:
-https://apidock.com/rails/ActiveRecord/Store/ClassMethods/store_accessor
-https://www.mariocarrion.com/2017/06/06/rails-5-json-array-fields.html
-https://nandovieira.com/using-postgresql-and-jsonb-with-ruby-on-rails
-http://jetrockets.pro/blog/rails-5-attributes-api-value-objects-and-jsonb
+Our inspirations for this are the following resources:  
+https://apidock.com/rails/ActiveRecord/Store/ClassMethods/store_accessor  
+https://www.mariocarrion.com/2017/06/06/rails-5-json-array-fields.html  
+https://nandovieira.com/using-postgresql-and-jsonb-with-ruby-on-rails  
+http://jetrockets.pro/blog/rails-5-attributes-api-value-objects-and-jsonb  
 https://blog.codeship.com/unleash-the-power-of-storing-json-in-postgres/
 
 ## Commands
